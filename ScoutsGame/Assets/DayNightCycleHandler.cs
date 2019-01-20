@@ -8,7 +8,8 @@ public class DayNightCycleHandler : MonoBehaviour {
 
     public Slider timeSlider;
     public float timeLeftInDay = 0.0f;
-    public int days = 0;
+    public int nextDay = 2;
+    public int currentDay = 1;
     public float timeInDay = 10f;
     public Text endOfDayText;
     public GameObject endOfDayObject;
@@ -18,50 +19,51 @@ public class DayNightCycleHandler : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
-		
-	}
-
-    public void DayTime()
-    {
-        if (isDay == true)
-        {
-            timeLeftInDay += 0.1f / timeInDay;
-        }
+        timeLeftInDay = timeInDay;
+        timeSlider.maxValue = timeInDay;
     }
+
 	
 	// Update is called once per frame
 	void Update ()
     {
-        InvokeRepeating("DayTime", 1, timeInDay);
-        if (timeLeftInDay >= 1.0f)
-        {
-            EndDay();
-            print("Day is done");
-        }
+        CheckDay();
+    }
 
-        if (days == 5)
-        {
-            tempEndScreen.SetActive(true);
-        }
-
-        timeSlider.value = timeLeftInDay;
-	}
-
-    private void EndDay()
+    private void CheckDay()
     {
-        isDay = false;
-        endOfDayObject.SetActive(true);
-        CancelInvoke("DayTime");
-        endOfDayText.text = "End of day. Current day: " + days;
-        Invoke("StartNewDay", 10);
+        if (isDay)
+        {
+            timeLeftInDay -= Time.deltaTime;
+            timeSlider.value = timeLeftInDay;
+        }
+
+        if (timeLeftInDay <= 0)
+        {
+            isDay = false;
+            endOfDayObject.SetActive(true);
+            endOfDayText.text = "End of day: " + currentDay;
+            print("End of day");
+            timeLeftInDay = timeInDay;
+            Invoke("StartNewDay", 1); 
+        }
     }
 
     private void StartNewDay()
     {
-        days += 1;
-        timeLeftInDay = 0;
+        for (int i = 2; i > 1; i--)
+        {
+            currentDay = nextDay;
+            nextDay += 1;
+            print("added day");
+        }
+            ResetDay();   
+    }
+
+    private void ResetDay()
+    {
+        print("day reset");
         endOfDayObject.SetActive(false);
         isDay = true;
-        print("new day starting");
     }
 }

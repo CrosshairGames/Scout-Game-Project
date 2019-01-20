@@ -21,7 +21,8 @@ public class SaveLoadHandler : MonoBehaviour {
         SaveGame.Save<int>("StickAmountFall", pickUpHandler.currentSticks);
         SaveGame.Save<int>("FoodAmountFall", pickUpHandler.currentFood);
         SaveGame.Save<float>("TimeLeftInDay", dayNightCycle.timeLeftInDay);
-        SaveGame.Save<int>("Days", dayNightCycle.days);
+        SaveGame.Save<int>("nextDay", dayNightCycle.nextDay);
+        SaveGame.Save<int>("currentDay", dayNightCycle.currentDay);
         print("saved");
         SaveGame.Save<Vector3>("PlayerPositionFall", playerTransform.position);
     }
