@@ -18,21 +18,46 @@ public class SaveLoadHandler : MonoBehaviour {
 
     public void Save()
     {
-        SaveGame.Save<int>("StickAmountFall", pickUpHandler.currentSticks);
-        SaveGame.Save<int>("FoodAmountFall", pickUpHandler.currentFood);
-        SaveGame.Save<float>("TimeLeftInDay", dayNightCycle.timeLeftInDay);
-        SaveGame.Save<int>("nextDay", dayNightCycle.nextDay);
-        SaveGame.Save<int>("currentDay", dayNightCycle.currentDay);
+        SaveResources();
+        SaveDayAndTime();
         print("saved");
         SaveGame.Save<Vector3>("PlayerPositionFall", playerTransform.position);
     }
 
+    private void SaveDayAndTime()
+    {
+        SaveGame.Save<float>("TimeLeftInDay", dayNightCycle.timeLeftInDay);
+        SaveGame.Save<int>("nextDay", dayNightCycle.nextDay);
+        SaveGame.Save<int>("currentDay", dayNightCycle.currentDay);
+        SaveGame.Save<float>("timeInDay", dayNightCycle.timeLeftInDay);
+    }
+
+    private void SaveResources()
+    {
+        SaveGame.Save<int>("StickAmountFall", pickUpHandler.currentSticks);
+        SaveGame.Save<int>("FoodAmountFall", pickUpHandler.currentFood);
+    }
+
     public void Load()
+    {
+        LoadResources();
+        LoadTimeAndDay();
+        print("loaded");
+        playerTransform.position = SaveGame.Load<Vector3>("PlayerPositionFall");
+    }
+
+    private void LoadTimeAndDay()
+    {
+        dayNightCycle.timeLeftInDay = SaveGame.Load<float>("TimeLeftInDay");
+        dayNightCycle.nextDay = SaveGame.Load<int>("nextDay");
+        dayNightCycle.currentDay = SaveGame.Load<int>("currentDay");
+        dayNightCycle.timeInDay = SaveGame.Load<float>("timeInDay");
+    }
+
+    private void LoadResources()
     {
         pickUpHandler.currentSticks = SaveGame.Load<int>("StickAmountFall");
         pickUpHandler.currentFood = SaveGame.Load<int>("FoodAmountFall");
-        print("loaded");
-        playerTransform.position = SaveGame.Load<Vector3>("PlayerPositionFall");
     }
 
     public void ResetGame()

@@ -40,23 +40,21 @@ public class DayNightCycleHandler : MonoBehaviour {
 
         if (timeLeftInDay <= 0)
         {
+
             isDay = false;
+            timeLeftInDay = timeInDay;
             endOfDayObject.SetActive(true);
             endOfDayText.text = "End of day: " + currentDay;
             print("End of day");
-            timeLeftInDay = timeInDay;
             Invoke("StartNewDay", 1); 
         }
     }
 
     private void StartNewDay()
     {
-        for (int i = 2; i > 1; i--)
-        {
             currentDay = nextDay;
             nextDay += 1;
             print("added day");
-        }
             ResetDay();   
     }
 
