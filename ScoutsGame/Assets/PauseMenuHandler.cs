@@ -2,14 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using BayatGames.SaveGameFree;
+using System;
 
 public class PauseMenuHandler : MonoBehaviour {
 
     public GameObject pauseMenu;
+    public GameObject loadButton;
+
+    SaveLoadHandler saveHandler;
 
 	// Use this for initialization
-	void Start () {
-		
+	void Start ()
+    {
+        saveHandler = FindObjectOfType<SaveLoadHandler>();
 	}
 	
 	// Update is called once per frame
@@ -20,7 +26,27 @@ public class PauseMenuHandler : MonoBehaviour {
             pauseMenu.SetActive(true);
             Time.timeScale = 0;
         }
+
+        CheckForSaveFile();
 	}
+
+    private void CheckForSaveFile()
+    {
+        if (SaveGame.Exists("PlayerPositionFall") && 
+        SaveGame.Exists("TimeLeftInDay") &&
+        SaveGame.Exists("nextDay")&&
+        SaveGame.Exists("currentDay")&&
+        SaveGame.Exists("timeInDay")&&
+        SaveGame.Exists("StickAmountFall")&&
+        SaveGame.Exists("FoodAmountFall"))
+        {
+            loadButton.SetActive(true);
+        }
+        else
+        {
+            loadButton.SetActive(false);
+        }
+    }
 
     public void Resume()
     {
@@ -30,6 +56,12 @@ public class PauseMenuHandler : MonoBehaviour {
 
     public void Exit()
     {
+        SceneManager.LoadScene(0);
+    }
+
+    public void DeathReturn()
+    {
+        saveHandler.ResetGame();
         SceneManager.LoadScene(0);
     }
 }

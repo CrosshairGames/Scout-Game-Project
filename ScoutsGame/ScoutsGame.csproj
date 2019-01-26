@@ -332,6 +332,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\AppleSpawner.cs" />
     <Compile Include="Assets\BayatGames\SaveGameFree\Examples\Auto Save\ExampleMoveObject.cs" />
     <Compile Include="Assets\BayatGames\SaveGameFree\Examples\Save Custom\ExampleSaveCustom.cs" />
     <Compile Include="Assets\BayatGames\SaveGameFree\Examples\Save Position\ExampleSavePosition.cs" />
@@ -355,12 +356,7 @@
     <Compile Include="Assets\BayatGames\SaveGameFree\Scripts\Types\Vector2Save.cs" />
     <Compile Include="Assets\BayatGames\SaveGameFree\Scripts\Types\Vector3Save.cs" />
     <Compile Include="Assets\BayatGames\SaveGameFree\Scripts\Types\Vector4Save.cs" />
-    <Compile Include="Assets\DayNightCycleHandler.cs" />
-    <Compile Include="Assets\EndScreen.cs" />
-    <Compile Include="Assets\FPSHandler.cs" />
-    <Compile Include="Assets\FPSPlayerMovement.cs" />
-    <Compile Include="Assets\LevelLoader.cs" />
-    <Compile Include="Assets\MainMenuHandler.cs" />
+    <Compile Include="Assets\GameSettings.cs" />
     <Compile Include="Assets\MasterCube\Script\MasterCube.cs" />
     <Compile Include="Assets\PauseMenuHandler.cs" />
     <Compile Include="Assets\ProCore\ProBuilder\API Examples\Icosphere FFT\Scripts\CameraControls.cs" />
@@ -380,12 +376,20 @@
     <Compile Include="Assets\SaveLoadHandler.cs" />
     <Compile Include="Assets\Scripts\AppleHandler.cs" />
     <Compile Include="Assets\Scripts\CameraControll.cs" />
+    <Compile Include="Assets\Scripts\DayNightCycleHandler.cs" />
+    <Compile Include="Assets\Scripts\EndScreen.cs" />
+    <Compile Include="Assets\Scripts\FPSHandler.cs" />
+    <Compile Include="Assets\Scripts\FPSPlayerMovement.cs" />
     <Compile Include="Assets\Scripts\HungerSystem.cs" />
+    <Compile Include="Assets\Scripts\LevelLoader.cs" />
+    <Compile Include="Assets\Scripts\MainMenuHandler.cs" />
     <Compile Include="Assets\Scripts\PickUpHandler.cs" />
     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\StickHandler.cs" />
     <Compile Include="Assets\Simple_Day_and_Night_Cycle\Scripts\DayAndNightControl.cs" />
     <Compile Include="Assets\Simple_Day_and_Night_Cycle\Scripts\VisualClockController.cs" />
+    <Compile Include="Assets\Spawner.cs" />
+    <Compile Include="Assets\WoodSpawner.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\BayatGames\SaveGameFree\Documentation\Save Game Free Documentation - Plain Text Version.txt" />

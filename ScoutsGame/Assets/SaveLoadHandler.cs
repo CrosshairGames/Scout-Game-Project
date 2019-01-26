@@ -62,9 +62,7 @@ public class SaveLoadHandler : MonoBehaviour {
 
     public void ResetGame()
     {
-        SaveGame.Delete("StickAmountFall");
-        SaveGame.Delete("FoodAmountFall");
-        SaveGame.Delete("PlayerPositionFall");
+        SaveGame.DeleteAll();
         playerTransform.position = spawnPoint.position;
         pickUpHandler.currentSticks = 0;
         pickUpHandler.currentFood = 0;
