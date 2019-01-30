@@ -4,10 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using BayatGames.SaveGameFree.Types;
 
-namespace PickupSys
-{
-    public class PickUpHandler : MonoBehaviour {
+ public class PickUpHandler : MonoBehaviour {
 
+        
         public Text stickText;
         public Text appleText;
 
@@ -17,6 +16,7 @@ namespace PickupSys
         // Use this for initialization
         void Start()
         {
+
             stickText.text = "Sticks: 0";
             appleText.text = "Apples: 0";
         }
@@ -41,4 +41,3 @@ namespace PickupSys
             }
         }
     }
-}

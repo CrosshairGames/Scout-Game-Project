@@ -19,28 +19,43 @@ public class DayNightCycleHandler : MonoBehaviour {
     public float timeInDay = 10f;
 
     [Header("Day Settings")]
+    public bool runDayCycle;
     public int nextDay = 2;
     public int currentDay = 1;
     public bool isDay = true;
 
     [Header("Win/Lose conditions")]
     [Range(0,2)]public int playerWon = 0;
-    public int foodRequiredInDay;
-    PickupSys.PickUpHandler pickupHandle;
+    PickUpHandler pickupHandle;
 
-	// Use this for initialization
-	void Start ()
+    private void Awake()
+    {
+        try
+        {
+            runDayCycle = GameObject.FindObjectOfType<GameSettings>().dayCycleEnabled;
+        }
+        catch (FormatException e)
+        {
+            Debug.LogError(e.Message);
+        }
+    }
+
+    // Use this for initialization
+    void Start ()
     {
         timeLeftInDay = timeInDay;
         timeSlider.maxValue = timeInDay;
-        pickupHandle = FindObjectOfType<PickupSys.PickUpHandler>();
+        pickupHandle = FindObjectOfType<PickUpHandler>();
     }
 
 	
 	// Update is called once per frame
 	void Update ()
     {
-        CheckDay();
+        if (runDayCycle == true)
+        {
+            CheckDay();
+        }
     }
 
     private void CheckDay()
@@ -53,23 +68,20 @@ public class DayNightCycleHandler : MonoBehaviour {
 
         if (timeLeftInDay <= 0)
         {
-
             isDay = false;
             timeLeftInDay = timeInDay;
-            CheckFoodAmount();
-            switch (playerWon)
+            if (playerWon == 1)
             {
-                case 1:
-                    print("End of day");
-                    endOfDayObjectEF.SetActive(true);
-                    endOfDayTextEF.text = "End of day: " + currentDay;
-                    Invoke("StartNewDay", 1);   
-                    break;
-                case 2:
-                    print("player lost");
-                    endOfDayObjectNEF.SetActive(true);
-                    endOfDayTextNEF.text = "You have Died, current day: " + currentDay;
-                    break;
+                print("End of day");
+                endOfDayObjectEF.SetActive(true);
+                endOfDayTextEF.text = "End of day: " + currentDay;
+                Invoke("StartNewDay", 1);   
+            }
+            if(playerWon == 2)
+            {
+                print("player lost");
+                endOfDayObjectNEF.SetActive(true);
+                endOfDayTextNEF.text = "You have Died, current day: " + currentDay;
             }
         }
     }
@@ -80,20 +92,6 @@ public class DayNightCycleHandler : MonoBehaviour {
         nextDay += 1;
         print("added day");
         ResetDay();   
-    }
-
-    private void CheckFoodAmount()
-    {
-        if (pickupHandle.currentFood < foodRequiredInDay)
-        {
-            print("Player Loses");
-            playerWon = 2;
-        }
-        else if (pickupHandle.currentFood >= foodRequiredInDay)
-        {
-            print("player survives");
-            playerWon = 1;
-        }
     }
 
     private void ResetDay()

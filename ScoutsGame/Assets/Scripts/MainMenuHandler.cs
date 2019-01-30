@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using BayatGames.SaveGameFree;
 
 public class MainMenuHandler : MonoBehaviour {
 
@@ -15,12 +16,23 @@ public class MainMenuHandler : MonoBehaviour {
 	void Update () {
 		
 	}
-    public void StartGame(int difficulty)
+    public void RunStartGame(int index)
     {
-        if (difficulty == 1)
+        if (SaveGame.Exists("PlayerPositionFall") && SaveGame.Exists("TimeLeftInDay")
+            && SaveGame.Exists("nextDay")
+            && SaveGame.Exists("currentDay")
+            && SaveGame.Exists("timeInDay"))
         {
-            SceneManager.LoadScene(1);
+            StartGame(index);
         }
+        else
+        {
+            print("No save found");
+        }
+    }
+    public void StartGame(int sceneIndex)
+    { 
+            SceneManager.LoadScene(sceneIndex);
     }
     public void ExitGame()
     {

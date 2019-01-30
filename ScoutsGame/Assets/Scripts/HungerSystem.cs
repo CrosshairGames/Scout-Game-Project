@@ -2,44 +2,65 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HungerSystem : MonoBehaviour {
 
-    public int hungerLevel = 100;
-    public int maxHungerLevel = 100;
-    public int hungerRepeatRate = 5;
-    public int invokeRate = 5;
-    public int ReductionAmount = 2;
+    public int foodGathered;
+    public bool doHunger;
+    public int foodRequiredInDay = 0;
 
-    public int foodAmount = 0;
+    public Text reqFoodText;
 
-    PickupSys.PickUpHandler pickUpHandler;
+    PickUpHandler pickUpHandler;
+    DayNightCycleHandler cycleHandler;
 
-	// Use this for initialization
-	void Start ()
+    private void Awake()
     {
-        pickUpHandler = FindObjectOfType<PickupSys.PickUpHandler>();
-        hungerLevel = maxHungerLevel;
+        try
+        {
+        doHunger = GameObject.FindObjectOfType<GameSettings>().hungerEnabled;
+        foodRequiredInDay = GameObject.FindObjectOfType<GameSettings>().foodNeeded;
+        }
+        catch (FormatException e)
+        {
+            Debug.LogError(e.Message);
+        }
+
+    }
+
+    // Use this for initialization
+    void Start ()
+    {
+        pickUpHandler = FindObjectOfType<PickUpHandler>();
+        cycleHandler = FindObjectOfType<DayNightCycleHandler>();
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
-        foodAmount = pickUpHandler.currentFood;
-        while (hungerLevel != 0)
+        foodGathered = pickUpHandler.currentFood;
+        reqFoodText.text = "Food Needed: " + foodRequiredInDay;
+        if (doHunger)
         {
-            InvokeRepeating("MinusHunger", invokeRate, hungerRepeatRate);
+            if(!cycleHandler.isDay)
+            {
+                CheckFoodAmount();
+            }
         }
 	}
 
-    public void MinusHunger()
+    private void CheckFoodAmount()
     {
-        hungerLevel -= ReductionAmount;
-    }
-
-    public void AddFood()
-    {
-        hungerLevel += 2;
-        foodAmount -= 1;
+        if (pickUpHandler.currentFood < foodRequiredInDay)
+        {
+            print("Player Loses");
+            cycleHandler.playerWon = 2;
+        }
+        else if (pickUpHandler.currentFood >= foodRequiredInDay)
+        {
+            print("player survives");
+            cycleHandler.playerWon = 1;
+        }
     }
 }
